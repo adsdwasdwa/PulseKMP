@@ -44,39 +44,39 @@ workflows:
           success: true
           failure: true
 
-ios-workflow:
-  name: iOS Framework Workflow
-  max_build_duration: 120
-  instance_type: mac_mini_m2
-  environment:
-    groups:
-      - app_store_credentials
-    java: 17
-    xcode: latest
-  triggering:
-    events:
-      - push
-      - tag
-      - pull_request
-    branch_patterns:
-      - pattern: main
-        include: true
-        source: true
-  scripts:
-    - name: Make gradlew executable
-      script: chmod +x gradlew
-    - name: Build iOS Framework (Release)
-      script: |
-        ./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
-  artifacts:
-    - composeApp/build/bin/iosArm64/releaseFramework/*.framework/**
-  publishing:
-    email:
-      recipients:
-        - user@example.com
-      notify:
-        success: true
-        failure: true
+  ios-workflow:
+    name: iOS Framework Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    environment:
+      groups:
+        - app_store_credentials
+      java: 17
+      xcode: latest
+    triggering:
+      events:
+        - push
+        - tag
+        - pull_request
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    scripts:
+      - name: Make gradlew executable
+        script: chmod +x gradlew
+      - name: Build iOS Framework (Release)
+        script: |
+          ./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
+    artifacts:
+      - composeApp/build/bin/iosArm64/releaseFramework/*.framework/**
+    publishing:
+      email:
+        recipients:
+          - user@example.com
+        notify:
+          success: true
+          failure: true
 
   desktop-workflow:
     name: Desktop Workflow
