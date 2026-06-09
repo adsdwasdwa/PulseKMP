@@ -67,9 +67,9 @@ workflows:
         script: chmod +x gradlew
       - name: Build iOS Framework (Release)
         script: |
-          ./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
-    artifacts:
-      - composeApp/build/bin/iosArm64/releaseFramework/*.framework/**
+          ./gradlew :composeApp:assembleXcodeFrameworkRelease
+      artifacts:
+        - composeApp/build/XCodeFrameworks/release/**/*.framework/**
     publishing:
       email:
         recipients:
