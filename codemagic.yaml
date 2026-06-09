@@ -68,8 +68,8 @@ workflows:
       - name: Build iOS Framework (Release)
         script: |
           ./gradlew :composeApp:assembleXcodeFrameworkRelease
-      artifacts:
-        - composeApp/build/XCodeFrameworks/release/**/*.framework/**
+    artifacts:
+      - composeApp/build/XCodeFrameworks/release/**/*.framework/**
     publishing:
       email:
         recipients:
