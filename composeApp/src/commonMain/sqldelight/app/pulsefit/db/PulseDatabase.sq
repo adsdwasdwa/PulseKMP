@@ -1,0 +1,158 @@
+import kotlin.Boolean;
+import kotlin.Int;
+
+CREATE TABLE ExerciseEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    muscleGroup TEXT NOT NULL,
+    equipment TEXT NOT NULL,
+    isCustom INTEGER AS Boolean NOT NULL DEFAULT 0
+);
+
+CREATE TABLE FoodEntryEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    "date" TEXT NOT NULL,
+    mealSlot TEXT NOT NULL,
+    foodName TEXT NOT NULL,
+    brand TEXT,
+    source TEXT NOT NULL,
+    servingLabel TEXT NOT NULL,
+    calories INTEGER AS Int NOT NULL,
+    protein REAL NOT NULL,
+    carbs REAL NOT NULL,
+    fat REAL NOT NULL,
+    grams INTEGER AS Int NOT NULL
+);
+
+CREATE TABLE WaterLogEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    "date" TEXT NOT NULL,
+    milliliters INTEGER AS Int NOT NULL
+);
+
+CREATE TABLE WorkoutSetEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    exerciseId TEXT NOT NULL,
+    "date" TEXT NOT NULL,
+    weightKg REAL NOT NULL,
+    reps INTEGER AS Int NOT NULL,
+    restSeconds INTEGER AS Int NOT NULL,
+    workoutId TEXT,
+    rpe INTEGER AS Int,
+    setType TEXT NOT NULL DEFAULT 'Normal'
+);
+
+CREATE TABLE RoutineTemplateEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE RoutineExerciseEntity (
+    routineId TEXT NOT NULL,
+    exerciseId TEXT NOT NULL,
+    targetSets INTEGER AS Int NOT NULL,
+    targetReps TEXT NOT NULL,
+    restSeconds INTEGER AS Int NOT NULL,
+    PRIMARY KEY (routineId, exerciseId)
+);
+
+CREATE TABLE AchievementEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    "date" TEXT NOT NULL,
+    title TEXT NOT NULL,
+    detail TEXT NOT NULL,
+    "type" TEXT NOT NULL
+);
+
+CREATE TABLE WeightEntryEntity (
+    id TEXT NOT NULL PRIMARY KEY,
+    "date" TEXT NOT NULL,
+    weightKg REAL NOT NULL
+);
+
+CREATE TABLE SettingsEntity (
+    "key" TEXT NOT NULL PRIMARY KEY,
+    "value" TEXT NOT NULL
+);
+
+CREATE TABLE TargetHitDayEntity (
+    "date" TEXT NOT NULL PRIMARY KEY
+);
+
+-- Queries
+
+getAllExercises:
+SELECT * FROM ExerciseEntity;
+
+insertExercise:
+INSERT OR REPLACE INTO ExerciseEntity(id, name, muscleGroup, equipment, isCustom)
+VALUES (?, ?, ?, ?, ?);
+
+deleteExercise:
+DELETE FROM ExerciseEntity WHERE id = ?;
+
+getAllFoodEntries:
+SELECT * FROM FoodEntryEntity;
+
+insertFoodEntry:
+INSERT OR REPLACE INTO FoodEntryEntity(id, "date", mealSlot, foodName, brand, source, servingLabel, calories, protein, carbs, fat, grams)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteFoodEntry:
+DELETE FROM FoodEntryEntity WHERE id = ?;
+
+getAllWaterLogs:
+SELECT * FROM WaterLogEntity;
+
+insertWaterLog:
+INSERT OR REPLACE INTO WaterLogEntity(id, "date", milliliters)
+VALUES (?, ?, ?);
+
+getAllWorkoutSets:
+SELECT * FROM WorkoutSetEntity;
+
+insertWorkoutSet:
+INSERT OR REPLACE INTO WorkoutSetEntity(id, exerciseId, "date", weightKg, reps, restSeconds, workoutId, rpe, setType)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+getAllRoutines:
+SELECT * FROM RoutineTemplateEntity;
+
+insertRoutine:
+INSERT OR REPLACE INTO RoutineTemplateEntity(id, name)
+VALUES (?, ?);
+
+getAllRoutineExercises:
+SELECT * FROM RoutineExerciseEntity;
+
+insertRoutineExercise:
+INSERT OR REPLACE INTO RoutineExerciseEntity(routineId, exerciseId, targetSets, targetReps, restSeconds)
+VALUES (?, ?, ?, ?, ?);
+
+getAllAchievements:
+SELECT * FROM AchievementEntity;
+
+insertAchievement:
+INSERT OR REPLACE INTO AchievementEntity(id, "date", title, detail, "type")
+VALUES (?, ?, ?, ?, ?);
+
+getAllWeightEntries:
+SELECT * FROM WeightEntryEntity;
+
+insertWeightEntry:
+INSERT OR REPLACE INTO WeightEntryEntity(id, "date", weightKg)
+VALUES (?, ?, ?);
+
+getSetting:
+SELECT "value" FROM SettingsEntity WHERE "key" = ?;
+
+insertSetting:
+INSERT OR REPLACE INTO SettingsEntity("key", "value")
+VALUES (?, ?);
+
+getAllTargetHitDays:
+SELECT "date" FROM TargetHitDayEntity;
+
+insertTargetHitDay:
+INSERT OR REPLACE INTO TargetHitDayEntity("date")
+VALUES (?);
